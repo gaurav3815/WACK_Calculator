@@ -1,0 +1,168 @@
+def wack():
+    global marketvalueofequity
+    global Mv_of_pref_shares
+    global not_paid_Ke
+    global x2
+    global recentdividendquestion
+    global AllResponses
+    global list
+    global pref_share
+    global Kd
+    global pref_nominal
+    global company_debt
+    global tradingshareprice
+    global total
+    AllMarketValues = marketvalueofequity + company_debt + Mv_of_pref_shares
+    if "yes" in list:
+        kecal = x2 * (marketvalueofequity / AllMarketValues)
+        print(kecal)
+        kpcal = pref_share * (Mv_of_pref_shares / AllMarketValues)
+        print(kpcal)
+        kdcal = Kd * (company_debt / AllMarketValues)
+        print(kdcal)
+        finalcal = kecal + kpcal + kdcal
+
+        print(finalcal)
+
+    else:
+        print("The recentdividend was not paid at start")
+
+
+def marketvalue_of_debt():
+    global company_debt
+    company_debt = float(input("What is the company debt? = £"))
+    print(company_debt)
+    return wack()
+
+def marketvalue_of_pref_share():
+    global Mv_of_pref_shares
+    global pref_shares
+    global pref_nominal
+    global tradingshareprice
+    global total
+    pref_shares = float(input('Enter the preference shares = £'))
+    pref_nominal = float(input('Enter the preference shares nominal value = £'))
+    Mv_of_pref_shares = (pref_shares / pref_nominal) * tradingshareprice
+    print(Mv_of_pref_shares)
+    return marketvalue_of_debt()
+
+def marketvalue_of_eqity():
+    global marketvalueofequity
+    company_equity = float(input("What is the company equity? = £ "))
+    ord_nominal = float(input("What is the ordinary shares nominal value? = £"))
+    marketvalueofequity = (company_equity / ord_nominal) * shareprice
+    print(marketvalueofequity)
+    return marketvalue_of_pref_share()
+def cost_of_debt():
+    global Kd
+    loanpercentage = int(input("What is the loan percentage? = "))
+    loanpercentagecon = loanpercentage / 100
+    coperatetax = int(input("What is the Coperate Tax? = "))
+    coperatetaxcon = coperatetax / 100
+    Kd = loanpercentagecon * (1 - coperatetaxcon) * 100
+    print(Kd)
+    return marketvalue_of_eqity()
+def cost_of_pref_shares():
+    global tradingshareprice
+    global list
+    global total
+    global pref_share
+    print(list)
+    percentage = float(input("What is the Percentage value of pref share? = "))
+    percentagecon = percentage / 100
+    nominalvalue = float(input("What is the nominal Value of your pref share? = £"))
+    total = percentagecon / nominalvalue
+    tradingshareprice = float(input("What is the trading share price? = £"))
+    pref_share = total/tradingshareprice
+    print(pref_share)
+    return cost_of_debt()
+def cost_of_equity_if_growthrate():
+    global recentdividendquestion
+    AllResponses = ["yes", "yep", "YES", "yeah", "Yep", "Ya", "yh", "YH", "Yh", "no", "nope", "NO", "No", "NOPE", "na","na bro", "na man"]
+    recentdividendquestion = str(input("Has the recent Dividend being paid or not? = "))
+    while recentdividendquestion not in AllResponses:
+        print("Please respond with yes or no!")
+        recentdividendquestion = str(input("Has the recent Dividend being paid or not? = "))
+    else:
+        global shareprice
+        global x2
+        global not_paid_Ke
+        global list
+        list = []
+        if recentdividendquestion in AllResponses [0:9]:
+            recentdividend = float(input("What is your recent dividend? = £"))
+            shareprice = float(input("What is the share price? = £"))
+            growthrate0 = float(input("What is the growth rate? = "))
+            x = recentdividend*(1+growthrate0) / shareprice
+            x2 = x + growthrate0
+            list.append("yes")
+            print(list)
+            print(x2)
+            return cost_of_pref_shares()
+        else:
+            recentdividend = float(input("What is your recent dividend? = £"))
+            shareprice = float(input("What is the share trading price? = £"))
+            growthrate0 = float(input("What is the growth rate? = "))
+            not_paid_Ke = (recentdividend / shareprice) + growthrate0
+            list.append("No")
+            print(list)
+            print(not_paid_Ke)
+            return cost_of_pref_shares()
+
+def hello():
+    global shareprice
+    global recentdividend
+    global growthrateworkout2
+    global x2
+    global list
+    list = []
+    shareprice = float(input("What is the share price? = £"))
+    x = recentdividend * (1 + growthrateworkout2) / shareprice
+    x2 = x + growthrateworkout2
+    list.append("yes")
+    print(list)
+    print(x2)
+    return cost_of_pref_shares()
+
+
+def cost_of_equity_if_no():
+    global AllResponses
+    global list
+    list =[]
+    AllResponses = ["yes", "yep", "YES", "yeah", "Yep", "Ya", "yh", "YH", "Yh", "no", "nope", "NO", "No", "NOPE", "na", "na bro", "na man"]
+    recentdividendquestion = str(input("Has the recent Dividend being paid or not? = "))
+    while recentdividendquestion not in AllResponses:
+        print("Please respond with yes or no!")
+        recentdividendquestion = str(input("Has the recent Dividend being paid or not? = "))
+    else:
+        if recentdividendquestion in AllResponses[0:9]:
+            list.append("yes")
+            print(list)
+            return hello()
+        else:
+            shareprice = float(input("What is the share price? = £"))
+            Ke3 = (recentdividend / shareprice) + growthrateworkout2
+            list.append("No")
+            print(list)
+            print(Ke3)
+            return cost_of_pref_shares()
+def main():
+    AllResponses = ["yes", "yep", "YES", "yeah", "Yep", "Ya", "yh", "YH", "Yh", "no", "nope", "NO", "No", "NOPE", "na", "na bro", "na man"]
+    grothrate = str(input("Do you have a growth rate value? = "))
+    if grothrate in AllResponses[0:9]:
+        while grothrate not in AllResponses:
+            print("Please respond with yes or no!")
+            grothrate = str(input("Do you have a growth rate value? = "))
+        else:
+            return cost_of_equity_if_growthrate()
+    else:
+        global growthrateworkout2
+        global recentdividend
+        recentdividend = float(input("What is your recent dividend? = £"))
+        firstdividend = float(input("What is your first dividend? = £"))
+        numberofyears = int(input("How long was the dividend paid? = "))
+        growthrateworkout = (recentdividend/firstdividend)**(1/numberofyears)
+        growthrateworkout2 = growthrateworkout - 1
+        print(growthrateworkout2)
+        return cost_of_equity_if_no()
+main()
