@@ -15,17 +15,19 @@ def wack():
     AllMarketValues = marketvalueofequity + company_debt + Mv_of_pref_shares
     if "yes" in list:
         kecal = x2 * (marketvalueofequity / AllMarketValues)
-        print(kecal)
+        
         kpcal = pref_share * (Mv_of_pref_shares / AllMarketValues)
-        print(kpcal)
+        
         kdcal = Kd * (company_debt / AllMarketValues)
-        print(kdcal)
-        finalcal = kecal + kpcal + kdcal
+        Kd_convert = kdcal / 100
+        
+        finalcal = (kecal + kpcal + Kd_convert) * 100
+        
 
-        print(finalcal)
+        print("WACC = ", finalcal)
 
     else:
-        print("The recentdividend was not paid at start")
+        print("The recent dividend was not paid at start")
 
 
 def marketvalue_of_debt():
